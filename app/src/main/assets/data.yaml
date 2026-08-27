@@ -1,0 +1,15 @@
+train: ../train/images
+val: ../valid/images
+test: ../test/images
+nc: 3
+names:
+- Ator
+- Caso de uso
+- Relacionamento
+roboflow:
+  workspace: pablos-workspace-vwg4k
+  project: find-relacionamentos-caso-de-usos-ators-and-nds
+  version: 7
+  license: Private
+  url: https://app.roboflow.com/pablos-workspace-vwg4k/find-relacionamentos-caso-de-usos-ators-and-nds/7
+path: /content/dataset
