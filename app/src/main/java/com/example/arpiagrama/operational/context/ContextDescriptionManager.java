@@ -365,20 +365,67 @@ public class ContextDescriptionManager {
     }
 
     @NonNull
-    private String buildAltTextPrompt(@NonNull String structuredDiagramData) {
+    private String buildAccessibleDescriptionPrompt(@NonNull String structuredDiagramData) {
         StringBuilder prompt = new StringBuilder();
-        prompt.append("Você receberá dados estruturados de um diagrama de caso de uso, em JSON. ")
-                .append("Crie um texto alternativo curto e acessível para pessoas com deficiência visual.\n")
+
+        prompt.append("Você receberá dados estruturados, em JSON, de um diagrama de caso de uso UML. ")
+                .append("Produza uma descrição acessível do diagrama para pessoas com deficiência visual, ")
+                .append("permitindo compreender seus elementos, relacionamentos e organização espacial.\n\n")
+
                 .append("Regras obrigatórias:\n")
                 .append("1) Responda em português do Brasil.\n")
-                .append("2) Use no máximo 160 caracteres e apenas uma frase.\n")
-                .append("3) Não invente nomes, conexões, tipos ou ações ausentes no JSON.\n")
-                .append("4) Quando não houver nome, escreva sem nome definido.\n")
-                .append("5) Não cite cores, posições, formas, coordenadas ou IDs como P1.\n")
-                .append("6) Resuma somente o que ajuda a entender o diagrama rapidamente.\n")
-                .append("Retorne apenas o texto alternativo final.\n")
+                .append("2) Utilize somente informações presentes no JSON.\n")
+                .append("3) Não invente nomes, elementos, relacionamentos, posições ou características ausentes.\n")
+                .append("4) Quando um elemento não possuir nome, escreva \"sem nome definido\".\n")
+                .append("5) Não mencione IDs internos, coordenadas numéricas, valores de bounding boxes ")
+                .append("ou identificadores como P1, P2 etc.\n")
+                .append("6) Descreva posições espaciais de forma natural, como centro, esquerda, direita, ")
+                .append("parte superior e parte inferior, somente quando essas informações puderem ser ")
+                .append("determinadas a partir dos dados fornecidos.\n")
+                .append("7) Descreva apenas características visuais ou físicas que sejam úteis para ")
+                .append("compreender o diagrama.\n")
+                .append("8) Diferencie claramente atores, casos de uso e relacionamentos.\n")
+                .append("9) Informe todas as associações existentes entre os elementos.\n")
+                .append("10) Não interprete posição ou orientação espacial como sequência de execução.\n")
+                .append("11) Não considere marcações utilizadas pelo sistema de reconhecimento como ")
+                .append("elementos adicionais do diagrama.\n")
+                .append("12) Evite repetições e utilize linguagem objetiva, clara e acessível.\n")
+                .append("13) Ao final da descrição, inclua obrigatoriamente e exatamente o seguinte aviso: ")
+                .append("\"Aviso: o texto deste PDF foi gerado por inteligência artificial (IA) e pode conter erros.\"\n\n")
+
+                .append("Organize obrigatoriamente a resposta utilizando exatamente as seguintes seções:\n\n")
+
+                .append("Descrição acessível do diagrama\n\n")
+
+                .append("Texto alternativo resumido\n")
+                .append("Apresente em uma ou duas frases um resumo contendo os principais elementos ")
+                .append("e relacionamentos do diagrama.\n\n")
+
+                .append("Elementos representados\n")
+                .append("Descreva os atores, casos de uso e demais elementos identificados, ")
+                .append("incluindo seus nomes quando disponíveis.\n\n")
+
+                .append("Conexões entre os elementos\n")
+                .append("Descreva explicitamente cada relacionamento identificado. ")
+                .append("Quando houver várias associações, apresente-as em lista numerada.\n\n")
+
+                .append("Organização espacial desta imagem\n")
+                .append("Descreva de maneira geral onde os principais elementos estão localizados ")
+                .append("em relação uns aos outros. Não informe coordenadas numéricas.\n\n")
+
+                .append("Observação para a interpretação\n")
+                .append("Informe aspectos relevantes para evitar interpretações incorretas do diagrama, ")
+                .append("como a inexistência de sequência de execução ou de relacionamentos entre ")
+                .append("casos de uso, quando isso puder ser determinado pelos dados.\n\n")
+
+                .append("Finalize obrigatoriamente com esta linha, sem modificá-la:\n")
+                .append("Aviso: o texto deste PDF foi gerado por inteligência artificial (IA) e pode conter erros.\n\n")
+
+                .append("Retorne somente a descrição acessível final, sem comentários adicionais.\n\n")
+
                 .append("Dados estruturados do diagrama (JSON):\n")
                 .append(structuredDiagramData);
+
         return prompt.toString();
     }
 
